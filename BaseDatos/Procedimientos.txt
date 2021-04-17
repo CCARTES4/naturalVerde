@@ -1,0 +1,114 @@
+--AGREGAR CLIENTE
+create or replace PROCEDURE SP_AGREGAR_CLIENTE(rutcliente VARCHAR2, nombre VARCHAR2, apellido VARCHAR2, telefono NUMBER, correo VARCHAR2) IS
+BEGIN
+    INSERT INTO CLIENTE VALUES (rutcliente, nombre, apellido, telefono, correo);
+END;
+
+--AGREGAR HISTORIAL
+create or replace PROCEDURE SP_AGREGAR_HISTORIAL(fase NUMBER, fecha DATE, descripcion VARCHAR2, estado VARCHAR2, nombre_proyecto VARCHAR2) IS
+BEGIN
+    INSERT INTO HISTORIAL VALUES (fase, fecha, descripcion, estado, nombre_proyecto);
+END;
+
+--AGREGAR INSUMO
+create or replace PROCEDURE SP_AGREGAR_INSUMO(codinsumo NUMBER, descripcion VARCHAR2, tienda VARCHAR2, cantidad NUMBER, precio NUMBER, nombre_proyecto VARCHAR2) IS
+BEGIN
+    INSERT INTO INSUMO VALUES (codinsumo, descripcion, tienda, cantidad, precio, nombre_proyecto);
+END;
+
+--AGREGAR PROYECTO
+create or replace PROCEDURE SP_AGREGAR_PROYECTO(nombre_proyecto VARCHAR2, servicio VARCHAR2, estado VARCHAR2, rutcliente VARCHAR2, nombre_equipo VARCHAR2) IS
+BEGIN
+    INSERT INTO PROYECTO VALUES(nombre_proyecto, servicio, estado, rutcliente, nombre_equipo);
+END;
+
+--AGREGAR SOLICITUD
+create or replace PROCEDURE SP_AGREGAR_SOLICITUD(codsolicitud NUMBER, hora VARCHAR2, fecha VARCHAR2, nombre_proyecto VARCHAR2, estado VARCHAR2) IS 
+BEGIN
+    INSERT INTO SOLICITUD VALUES(codsolicitud, hora, fecha, nombre_proyecto, estado);
+END;
+
+--AGREGAR USUARIO
+create or replace PROCEDURE SP_AGREGAR_USUARIO(rutcliente VARCHAR2, contrasena VARCHAR2, tipo_usuario VARCHAR2) IS
+BEGIN
+    INSERT INTO USUARIO VALUES(rutcliente, contrasena, tipo_usuario);
+END;
+
+--CAMBIAR ESTADO AGENDAR
+create or replace PROCEDURE SP_CAMBIA_ESTADO_AGENDAR(codsoli NUMBER, hora_soli VARCHAR2, fecha_soli VARCHAR2, estado_soli VARCHAR2, nombre_pro VARCHAR2) IS
+BEGIN
+    UPDATE SOLICITUD SET HORA=hora_soli, FECHA=fecha_soli, ESTADO=estado_soli, NOMBRE_PROYECTO=nombre_pro WHERE CODSOLICITUD=codsoli;
+END;
+
+--CAMBIAR ESTADO ESTADO SOLICITUD
+create or replace PROCEDURE SP_CAMBIAR_ESTADO_SOLICITUD(codsoli NUMBER, hora_soli VARCHAR2, fecha_soli VARCHAR2, estado_soli VARCHAR2, nombre_pro VARCHAR2) IS
+BEGIN
+    UPDATE SOLICITUD SET HORA=hora_soli, FECHA=fecha_soli, ESTADO=estado_soli, NOMBRE_PROYECTO=nombre_pro WHERE CODSOLICITUD=codsoli;
+END;
+
+--CAMBIAR ESTADO HISTORIAL
+create or replace PROCEDURE SP_CAMBIAR_ESTADO_HISTORIAL(fecha_soli VARCHAR2, descripcion_soli VARCHAR2, estado_soli VARCHAR2, nombre_pro VARCHAR2) IS
+BEGIN
+    UPDATE HISTORIAL SET FECHA=fecha_soli, DESCRIPCION=descripcion_soli, ESTADO=estado_soli, NOMBRE_PROYECTO=nombre_pro WHERE NOMBRE_PROYECTO=nombre_pro;
+END;
+
+--CAMBIAR ESTADO PROYECTO
+create or replace PROCEDURE SP_CAMBIAR_ESTADO_PROYECTO(nombre_pro VARCHAR2, servicio_pro VARCHAR2, estado_pro VARCHAR2, rutcliente_pro VARCHAR2, nombre_equipo_pro VARCHAR2) IS
+BEGIN
+    UPDATE PROYECTO SET NOMBRE_PROYECTO=nombre_pro, SERVICIO=servicio_pro, ESTADO=estado_pro, RUTCLIENTE=rutcliente_pro, NOMBRE_EQUIPO=nombre_equipo_pro WHERE NOMBRE_PROYECTO=nombre_pro;
+END;
+
+--INGRESAR CARRITO
+create or replace PROCEDURE SP_INGRESAR_CARRITO (codcarrito NUMBER, nombre_proyecto VARCHAR2, numcuenta NUMBER, nombre_banco VARCHAR2, tipo_cuenta VARCHAR2, numcuota NUMBER, totalpagar NUMBER, valorcuota NUMBER)
+IS 
+BEGIN
+INSERT INTO CARRITO VALUES (codcarrito, nombre_proyecto, numcuenta, nombre_banco, tipo_cuenta, numcuota, totalpagar, valorcuota);
+END;
+
+--LISTAR TRABAJADORES
+create or replace PROCEDURE SP_LISTAR_TRABAJADORES(TRABAJADORES OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN TRABAJADORES FOR SELECT * FROM TRABAJADOR;
+END;
+
+--LISRAR TIPO CUENTA
+--create or replace PROCEDURE SP_LISTAR_TIPO(TIPOS OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN TIPOS FOR SELECT * FROM TIPO_CUENTA;
+END;
+
+--LISTAR SOLICITUDES
+create or replace PROCEDURE SP_LISTAR_SOLICITUD(SOLICITUDES OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN SOLICITUDES FOR SELECT * FROM SOLICITUD;
+END;
+
+--LISTAR PROYECTOS
+create or replace PROCEDURE SP_LISTAR_PROYECTO(PROYECTOS OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN PROYECTOS FOR SELECT * FROM PROYECTO;
+END;
+
+--LISTAR INSUMOS
+create or replace PROCEDURE SP_LISTAR_INSUMO(INSUMOS OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN INSUMOS FOR SELECT * FROM INSUMO;
+END;
+
+--LISTAR HISTORIAL
+create or replace PROCEDURE SP_LISTAR_HISTORIAL(HISTORIALES OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN HISTORIALES FOR SELECT * FROM HISTORIAL;
+END;
+
+--LISTAR EQUIPO
+create or replace PROCEDURE SP_LISTAR_EQUIPO(EQUIPOS OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN EQUIPOS FOR SELECT * FROM EQUIPO;
+END;
+
+--LISTAR BANCOS
+create or replace PROCEDURE SP_LISTAR_BANCO(BANCOS OUT SYS_REFCURSOR) IS
+BEGIN
+    OPEN BANCOS FOR SELECT * FROM BANCO;
+END;

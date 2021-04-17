@@ -1,0 +1,72 @@
+a:hover, a:focus {
+	color: green;
+}
+
+#navigation {
+	border-top: 5px solid green;
+}
+
+a, .tp-caption a.btn:hover {
+	color: green;
+}
+
+.top-nav-collapse {
+	background: green;
+}
+
+.carousel-indicators .active {
+	background-color: green;
+}
+
+.header-text h2 span {
+	background-color: green;
+}
+
+.navbar-custom ul.nav ul.dropdown-menu li a:hover {
+	color: green;
+}
+
+.owl-theme .owl-controls .owl-page.active span, .owl-theme .owl-controls.clickable .owl-page:hover span {
+	background-color: green;
+}
+
+.widget-avatar .avatar:hover {
+	border: 5px solid green;
+}
+
+.bg-skin {
+	background: green;
+}
+
+.highlight-color {
+	background-color: green;
+}
+
+.service-box:hover {
+	border-bottom: 2px solid green;
+}
+
+
+form#contact-form input:focus, form#contact-form select:focus, form#contact-form textarea:focus {
+	border-color: green;
+}
+
+form.search-form input:focus {
+	border-color: green;
+}
+
+/* footer */
+
+ul.footer-menu li a:hover {
+	color: green;
+}
+
+footer a.totop:hover {
+	color: green;
+}
+
+.btn-skin {
+	color: #fff;
+	background-color: green;
+	border-color: green;
+}

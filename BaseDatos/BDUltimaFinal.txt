@@ -1,0 +1,202 @@
+-- ELIMINACION DE TABLAS
+
+DROP TABLE TRABAJADOR;
+DROP TABLE INSUMO;
+DROP TABLE SOLICITUD;
+DROP TABLE HISTORIAL;
+DROP TABLE PROYECTO;
+DROP TABLE EQUIPO;
+DROP TABLE USUARIO;
+DROP TABLE CLIENTE;
+DROP TABLE TIPO_CUENTA;
+DROP TABLE CARRITO;
+DROP TABLE BANCO;
+-------------------------------------------------------------------------------------------------------------
+
+
+-- BASE DE DATOS (TABLAS)
+
+CREATE TABLE cliente (
+    rutcliente   VARCHAR2(30) NOT NULL,
+    nombre       VARCHAR2(50) NOT NULL,
+    apellido     VARCHAR2(50) NOT NULL,
+    telefono     NUMBER(20) NOT NULL,
+    correo       VARCHAR2(50) NOT NULL
+);
+
+ALTER TABLE cliente ADD CONSTRAINT cliente_pk PRIMARY KEY ( rutcliente );
+
+CREATE TABLE equipo (
+    nombre_equipo VARCHAR2(30) NOT NULL
+);
+
+ALTER TABLE equipo ADD CONSTRAINT equipo_pk PRIMARY KEY ( nombre_equipo );
+
+CREATE TABLE historial (
+    fase              NUMBER(20) NOT NULL,
+    fecha             VARCHAR2(30) NOT NULL,
+    descripcion       VARCHAR2(50) NOT NULL,
+    estado            VARCHAR2(30) NOT NULL,
+    nombre_proyecto   VARCHAR2(50)
+);
+
+CREATE TABLE insumo (
+    codinsumo         NUMBER(30) NOT NULL,
+    descripcion       VARCHAR2(30) NOT NULL,
+    tienda            VARCHAR2(30) NOT NULL,
+    cantidad          NUMBER(20) NOT NULL,
+    precio            NUMBER(20) NOT NULL,
+    nombre_proyecto   VARCHAR2(50)
+);
+
+ALTER TABLE insumo ADD CONSTRAINT insumo_pk PRIMARY KEY ( codInsumo );
+
+CREATE TABLE proyecto (
+    nombre_proyecto   VARCHAR2(50) NOT NULL,
+    servicio          VARCHAR2(30) NOT NULL,
+    estado            VARCHAR2(30) NOT NULL,
+    rutcliente        VARCHAR2(30),
+    nombre_equipo     VARCHAR2(30) NOT NULL
+);
+
+ALTER TABLE proyecto ADD CONSTRAINT proyecto_pk PRIMARY KEY ( nombre_proyecto );
+
+CREATE TABLE solicitud (
+    codsolicitud      NUMBER(20) NOT NULL,
+    hora              VARCHAR2(30) NOT NULL,
+    fecha             VARCHAR2(30) NOT NULL,
+    estado            VARCHAR2(30) NOT NULL,
+    nombre_proyecto   VARCHAR2(50)
+);
+
+ALTER TABLE solicitud ADD CONSTRAINT solicitud_pk PRIMARY KEY ( codsolicitud );
+
+CREATE TABLE trabajador (
+    rut_trabajador      VARCHAR2(30) NOT NULL,
+    nombre_trabajador   VARCHAR2(30) NOT NULL,
+    cargo               VARCHAR2(30) NOT NULL,
+    nombre_equipo       VARCHAR2(30) NOT NULL
+);
+
+ALTER TABLE trabajador ADD CONSTRAINT trabajador_pk PRIMARY KEY ( rut_trabajador );
+
+CREATE TABLE usuario (
+    rutcliente     VARCHAR2(30) NOT NULL,
+    contrasena     VARCHAR2(50) NOT NULL,
+    tipo_usuario   VARCHAR2(50) NOT NULL
+);
+
+
+CREATE TABLE banco (
+    nombre_banco VARCHAR2(50) NOT NULL
+);
+
+ALTER TABLE banco ADD CONSTRAINT banco_pk PRIMARY KEY ( nombre_banco );
+
+CREATE TABLE carrito (
+    codcarrito        NUMBER(20) NOT NULL,
+    nombre_proyecto   VARCHAR2(50) NOT NULL,
+    numcuenta         NUMBER(20) NOT NULL,
+    nombre_banco      VARCHAR2(50) NOT NULL,
+    tipo_cuenta        VARCHAR2(20) NOT NULL
+);
+
+ALTER TABLE carrito ADD CONSTRAINT carrito_pk PRIMARY KEY ( codcarrito );
+
+CREATE TABLE tipo_cuenta (
+    tipo_cuenta VARCHAR2(20) NOT NULL
+);
+
+ALTER TABLE tipo_cuenta ADD CONSTRAINT tipo_cuenta_pk PRIMARY KEY ( tipo_cuenta );
+
+ALTER TABLE carrito
+    ADD CONSTRAINT carrito_banco_fk FOREIGN KEY ( nombre_banco )
+        REFERENCES banco ( nombre_banco );
+
+ALTER TABLE carrito
+    ADD CONSTRAINT carrito_tipo_cuenta_fk FOREIGN KEY ( tipo_cuenta )
+        REFERENCES tipo_cuenta ( tipo_cuenta );
+
+
+ALTER TABLE historial
+    ADD CONSTRAINT historial_proyecto_fk FOREIGN KEY ( nombre_proyecto )
+        REFERENCES proyecto ( nombre_proyecto );
+
+ALTER TABLE insumo
+    ADD CONSTRAINT insumo_proyecto_fk FOREIGN KEY ( nombre_proyecto )
+        REFERENCES proyecto ( nombre_proyecto );
+
+ALTER TABLE proyecto
+    ADD CONSTRAINT proyecto_cliente_fk FOREIGN KEY ( rutcliente )
+        REFERENCES cliente ( rutcliente );
+
+ALTER TABLE proyecto
+    ADD CONSTRAINT proyecto_equipo_fk FOREIGN KEY ( nombre_equipo )
+        REFERENCES equipo ( nombre_equipo );
+
+ALTER TABLE solicitud
+    ADD CONSTRAINT solicitud_proyecto_fk FOREIGN KEY ( nombre_proyecto )
+        REFERENCES proyecto ( nombre_proyecto );
+
+ALTER TABLE trabajador
+    ADD CONSTRAINT trabajador_equipo_fk FOREIGN KEY ( nombre_equipo )
+        REFERENCES equipo ( nombre_equipo );
+
+ALTER TABLE usuario
+    ADD CONSTRAINT usuario_cliente_fk FOREIGN KEY ( rutcliente )
+        REFERENCES cliente ( rutcliente );
+
+-----------------------------------------------------------------------------------------------------------------------
+--INSERT TRABAJADOR - EQUIPO
+INSERT INTO EQUIPO VALUES ('REBOOT SOFTWARE');
+INSERT INTO EQUIPO VALUES ('CREATICO');
+INSERT INTO EQUIPO VALUES ('QMEMO');
+
+
+INSERT INTO TRABAJADOR VALUES ('19891214-K','MARCELO JARA', 'TECNICO','QMEMO');
+INSERT INTO TRABAJADOR VALUES ('20876382-1','BORIS SAN MARTIN', 'TECNICO','QMEMO');
+INSERT INTO TRABAJADOR VALUES ('19876238-0','PABLO HERRERA', 'JEFE','QMEMO');
+INSERT INTO TRABAJADOR VALUES ('20762837-3','BASTIAN MARTINEZ', 'TECNICO','QMEMO');
+INSERT INTO TRABAJADOR VALUES ('21873627-K','GERMAN DURAN', 'TECNICO','QMEMO');
+
+INSERT INTO TRABAJADOR VALUES ('10431876-0','GUILLERMO LIRA', 'JEFE','CREATICO');
+INSERT INTO TRABAJADOR VALUES ('18919283-K','MARCELO LIRA', 'TECNICO','CREATICO');
+INSERT INTO TRABAJADOR VALUES ('20384837-4','ELIZABETH RAYEN', 'TECNICO','CREATICO');
+
+INSERT INTO TRABAJADOR VALUES ('9476224-3','FERNANDO JARA', 'JEFE','REBOOT SOFTWARE');
+INSERT INTO TRABAJADOR VALUES ('18765721-0','RODRIGO JARA', 'TECNICO','REBOOT SOFTWARE');
+INSERT INTO TRABAJADOR VALUES ('21837483-3','ANGELA JARA', 'TECNICO', 'REBOOT SOFTWARE');
+INSERT INTO TRABAJADOR VALUES ('22384728-3','NICOLAS JARA', 'TECNICO', 'REBOOT SOFTWARE');
+
+
+--INSERT BANCO
+INSERT INTO BANCO VALUES ('BANCO BICE');
+INSERT INTO BANCO VALUES ('BANCO BILBAO VIZCAYA ARGENTARIA, CHILE (BBVA)');
+INSERT INTO BANCO VALUES ('BANCO CONSORCIO');
+INSERT INTO BANCO VALUES ('BANCO DE CHILE');
+INSERT INTO BANCO VALUES ('BANCO DE CREDITO E INVERSIONES');
+INSERT INTO BANCO VALUES ('BANCO DEL ESTADO DE CHILE');
+INSERT INTO BANCO VALUES ('BANCO FALABELLA');
+INSERT INTO BANCO VALUES ('BANCO INTERNACIONAL');
+INSERT INTO BANCO VALUES ('BANCO ITAÚ CHILE');
+INSERT INTO BANCO VALUES ('BANCO PARIS');
+INSERT INTO BANCO VALUES ('BANCO PENTA');
+INSERT INTO BANCO VALUES ('BANCO RIPLEY');
+INSERT INTO BANCO VALUES ('BANCO SANTANDER-CHILE');
+INSERT INTO BANCO VALUES ('BANCO SECURITY');
+INSERT INTO BANCO VALUES ('CORPBANCA');
+INSERT INTO BANCO VALUES ('DEUTSCHE BANK (CHILE)');
+INSERT INTO BANCO VALUES ('HSBC BANK (CHILE)');
+INSERT INTO BANCO VALUES ('RABOBANK CHILE');
+INSERT INTO BANCO VALUES ('SCOTIABANK CHILE');
+
+--INSERT TIPO_CUENTA
+INSERT INTO TIPO_CUENTA VALUES ('CHEQUERA ELECTRONICA');
+INSERT INTO TIPO_CUENTA VALUES ('CUENTA CORRIENTE');
+INSERT INTO TIPO_CUENTA VALUES ('CUENTA VISTA');
+INSERT INTO TIPO_CUENTA VALUES ('TARJETA DE CREDITO');
+
+COMMIT;
+
+-------------------------------------------------------------------------------------------------------
+
